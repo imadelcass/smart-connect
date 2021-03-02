@@ -10,7 +10,8 @@ function Header() {
             </div>
             <div className="header__nav">
                 <ul className="nav__list">
-                    <li className="nav__item"><Link to="/">home</Link></li>
+                    <li className="nav__item"><Link to="/home">home</Link></li>
+                    <li className="nav__item"><Link to="/profile">profile</Link></li>
                     <li className="nav__item"><Link to="/friend">friend</Link></li>
                     <li className="nav__item"><a href="#">message</a></li>
                     <li className="nav__item"><a href="#">suggestion</a></li>

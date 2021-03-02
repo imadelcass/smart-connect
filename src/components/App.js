@@ -6,28 +6,40 @@ import './style/App.css';
 import Home from './Home';
 import { NameProvider } from './context';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { EmailProvider } from './EmailContext';
+import Profile from './Profile';
 function App() {
   return (
     <NameProvider>
-      <Router>
-        <div className="App">
-          <Switch>
-          <Route path="/login">
-              <Header />
-              <Auth />
-          </Route>
-          <Route path="/signup">
-              <Header />
-              <Signup />
-          </Route>
-          <Route path="/">
-              <Header />
-              <Home />
-          </Route>
-          </Switch>
-        </div>
-      </Router>
-    </NameProvider>
+        <EmailProvider>
+        <Router>
+          <div className="App">
+            <Switch>
+            <Route path="/profile">
+                <Header />
+                <Profile />
+            </Route>
+            <Route path="/home">
+                <Header />
+                <Home />
+            </Route>
+            <Route path="/login">
+                <Header />
+                <Auth />
+            </Route>
+            <Route path="/signup">
+                <Header />
+                <Signup />
+            </Route>
+            <Route path="/">
+                <Header />
+                <Signup />
+            </Route>
+            </Switch>
+          </div>
+        </Router>
+    </EmailProvider>
+      </NameProvider>
   );
 }
 export default App;

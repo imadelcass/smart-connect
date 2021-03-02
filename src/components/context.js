@@ -11,7 +11,7 @@ export const NameProvider = props => {
         },
         {
             age : 30,
-            day : "samedi"
+            day : "samedi"  
         },
         {
             age : 44,

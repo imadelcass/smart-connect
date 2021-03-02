@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import { auth } from './firebase'
+import { auth, db } from './firebase'
 import './style/Auth.css'
 
 function Auth() {
@@ -12,11 +12,14 @@ function Auth() {
        // the register set up
        const register = e => {
         e.preventDefault()
+        db.collection("users").add({
+            email : email
+        })
         auth
         .createUserWithEmailAndPassword(email, password)
         .then((auth) => {
             if (auth) {
-                history.push('/')
+                history.push('/login')
             }
         })
         .catch(error => console.log(error))
@@ -43,9 +46,10 @@ function Auth() {
                     onChange={e => setPassword(e.target.value)}
                     placeholder="Password"/>
                     <button className="login__btn"
-                    onClick={register}>Sign Up
+                    onClick={register}>
+                        Sign Up
                     </button>
-                    <h5>You do have an account? <Link to="/signup">log in</Link></h5>
+                    <h5>You do have an account? <Link to="/login">log in</Link></h5>
                 </div>
             </div>
         </div>
