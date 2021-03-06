@@ -1,41 +1,67 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { auth, db } from './firebase';
+import Header from './Header';
+import './style/Profile.css';
 
 function Profile() {
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
+  const profileBackground =
+    'https://cdn.pixabay.com/photo/2016/06/02/02/33/triangles-1430105_960_720.png';
+  const [profileImg, setProfileImg] = useState('');
+  const styleGround = {
+    width: '100%',
+    height: '35vh',
+    objectFit: 'cover',
+  };
+  const styleImg = {
+    position: 'absolute',
+    left: '30px',
+    bottom: '-25%',
+    width: '180px',
+    borderRadius: '50%',
+  };
+  auth.onAuthStateChanged(user => {
+    setEmail(user.email);
+  });
 
- //1. Create a new function that returns a promise
- function firstFunction() {
-    return new Promise(
-        (resolve, reject) => {
-        let y = 0
-        setTimeout(
-            () => {
-            let i = 0;
-          for(i=0; i<10; i++){
-             y++
+  const userInfo = () => {
+    return new Promise((resolve, reject) => {
+      db.collection('users').onSnapshot(snapshot => {
+        snapshot.forEach(doc => {
+          if (doc.data().email == email) {
+            resolve(doc.data());
           }
-           console.log('loop completed')  
-           resolve(y)
-        }, 2000)
-    }
-    )
-  }
-  
-  //2. Create an async function
-  async function secondFunction() {
-      console.log('before promise call')
-      //3. Await for the first function to complete
-      let result = await firstFunction()
-      console.log('promise resolved: ' + result)
-      console.log('next step')
-  }; 
-
-  secondFunction()
-
-    return (
-        <div>
-            <h1>profile</h1>
+        });
+      });
+    });
+  };
+  // and then do that :
+  userInfo().then(data => {
+    setName(data.name);
+    setAge(data.age);
+    setProfileImg(data.image);
+  });
+  return (
+    <div className='profile'>
+      <Header />
+      <div style={{ position: 'relative' }}>
+        <img style={styleGround} src={profileBackground} />
+        <img style={styleImg} src={profileImg} />
+      </div>
+      <div style={{ padding: '40px' }} className='profile__info'>
+        <div style={{ paddingTop: '60px' }} className='profile__person'>
+          <h3 style={{ position: 'relative', left: '2px', fontSize: '26px' }}>
+            {name}
+          </h3>
+          <h3>{`Age : ${age}`}</h3>
+          <h3>{`Email : ${email}`}</h3>
         </div>
-    )
+        <div className='profile__auth'></div>
+      </div>
+    </div>
+  );
 }
 
-export default Profile
+export default Profile;

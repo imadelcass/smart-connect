@@ -4,14 +4,22 @@ import { Context } from './context';
 import { EmailContext } from './EmailContext';
 import { auth, db, storage } from './firebase';
 import './style/CompletProfile.css';
+import { UserContext } from './UserContext';
+import axios from './axios';
 function CompletProfile() {
   const history = useHistory();
   const [nameEmail, setNameEmail] = useContext(EmailContext);
+  const [name, setName] = useState('');
   const [age, setage] = useState('');
+  let userid = '';
+  //const [user, setuser] = useContext(UserContext);
   const blankImg =
     'http://www.puckagency.com/wp-content/uploads/2017/09/blank-profile.jpg';
   const [profileImage, setprofileImage] = useState(blankImg);
 
+  const updateName = e => {
+    setName(e.target.value);
+  };
   const updateAge = e => {
     setage(e.target.value);
   };
@@ -33,13 +41,35 @@ function CompletProfile() {
       });
     };
     // and then do that :
-    userID().then(id => {
-      db.collection('users').doc(id).update({
-        age: age,
-        image: profileImage,
+    userID()
+      .then(id => {
+        //setuserid(id);
+        userid = id;
+        db.collection('users').doc(id).update({
+          age: age,
+          image: profileImage,
+          name: name,
+        });
+        history.push('/profile');
+      })
+      .then(() => {
+        //Post data to API
+        // const postData = e => {
+        axios
+          .post('http://localhost:8001/demo/users', {
+            idUser: userid,
+            name: name,
+            image: profileImage,
+            email: nameEmail,
+          })
+          .then(res => {
+            console.log(res);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        //};
       });
-      history.push('/profile');
-    });
   };
   // upload profile image to firebase storage
   const updateImage = e => {
@@ -76,6 +106,10 @@ function CompletProfile() {
         alt='profile'
       />
       <form className='completProfil__form'>
+        <label className='completProfile__age' htmlFor='age'>
+          Your name :
+        </label>
+        <input type='text' id='age' value={name} onChange={updateName} />
         <label className='completProfile__age' htmlFor='age'>
           Your age :
         </label>
