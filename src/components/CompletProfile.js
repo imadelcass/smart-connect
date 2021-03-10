@@ -56,11 +56,12 @@ function CompletProfile() {
         //Post data to API
         // const postData = e => {
         axios
-          .post('http://localhost:8001/demo/users', {
+          .post('/demo/users', {
             idUser: userid,
             name: name,
             image: profileImage,
             email: nameEmail,
+            age: age,
           })
           .then(res => {
             console.log(res);

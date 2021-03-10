@@ -4,6 +4,7 @@ import Auth from './Auth';
 import Header from './Header';
 import Signup from './Signup';
 import Profile from './Profile';
+import UserProfile from './UserProfile';
 import Message from './Message';
 import Home from './Home';
 import { NameProvider } from './context';
@@ -35,6 +36,9 @@ function App() {
                 <Route path='/signup'>
                   <Header />
                   <Signup />
+                </Route>
+                <Route path='/users/:id'>
+                  <UserProfile/>
                 </Route>
                 <Route path='/'>
                   <Header />

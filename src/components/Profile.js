@@ -20,12 +20,12 @@ function Profile() {
     left: '30px',
     bottom: '-25%',
     width: '180px',
+    height: '150px',
     borderRadius: '50%',
   };
   auth.onAuthStateChanged(user => {
     setEmail(user.email);
   });
-
   const userInfo = () => {
     return new Promise((resolve, reject) => {
       db.collection('users').onSnapshot(snapshot => {
@@ -58,7 +58,8 @@ function Profile() {
           <h3>{`Age : ${age}`}</h3>
           <h3>{`Email : ${email}`}</h3>
         </div>
-        <div className='profile__auth'></div>
+        <div className='profile__auth'>
+        </div>
       </div>
     </div>
   );

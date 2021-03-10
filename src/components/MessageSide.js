@@ -5,6 +5,10 @@ import { auth } from './firebase';
 
 function MessageSide() {
   const [nameEmail, setNameEmail] = useState('');
+  const [friends, setfriends] = useState([{
+    name : "smart connect",
+    image: 'ch'
+  }]);
   const [user, setuser] = useState({
     name: '',
     email: '',
@@ -55,12 +59,15 @@ function MessageSide() {
     >
       <div style={{ display: 'flex' }} className='Message__head'>
         <img
-          style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+          style={{ objectFit:'cover' ,width: '60px', height: '60px', borderRadius: '50%' }}
           src={user.image}
         />
         <h2 style={{ paddingLeft: '20px', position: 'relative', top: '10px' }}>
           Discussions
         </h2>
+      </div>
+      <div className='friends'>
+
       </div>
     </div>
   );

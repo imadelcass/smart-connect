@@ -20,7 +20,7 @@ function Header() {
             <Link to='/friend'>friend</Link>
           </li>
           <li className='nav__item'>
-            <Link to='message'>Message</Link>
+            <Link to='/message'>Message</Link>
           </li>
           <li className='nav__item'>
             <a href='#'>suggestion</a>
