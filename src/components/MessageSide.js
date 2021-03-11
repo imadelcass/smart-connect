@@ -8,9 +8,13 @@ function MessageSide() {
   const [nameEmail, setNameEmail] = useState('');
   const [friends, setfriends] = useState([
     {
-      name: 'smart connect',
+      _id: '6048ad9e2913622c3c6f4f1d',
+      idUser: 'gKIu3l8QrW0aVgPBwwWx',
+      name: 'lhsen yazmi',
       image:
-        'https://firebasestorage.googleapis.com/v0/b/clone-12b84.appspot.com/o/images%2F4200790421556105333-512.png?alt=media&token=734768f7-8ebd-4b29-846c-fa83f5c30097',
+        'https://firebasestorage.googleapis.com/v0/b/clone-12b84.appspot.com/o/images%2FGettyImages-1092658864_hero-1024x575.jpg?alt=media&token=ebd3d12c-22bb-478d-8ac7-11b08ebcdde5',
+      email: 'lhsen@yahoo.com',
+      age: '33',
     },
   ]);
   const [user, setuser] = useState({
@@ -20,7 +24,7 @@ function MessageSide() {
     idUser: '',
   });
   const getEmail = () => {
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(user => {
       setNameEmail(user.email);
     });
   };
@@ -33,9 +37,9 @@ function MessageSide() {
     });
   };
 
-  const getUser = (users) => {
+  const getUser = users => {
     return new Promise((resolve, reject) => {
-      users.filter((user) => {
+      users.filter(user => {
         if (user.email == nameEmail) {
           resolve(user);
         }
@@ -44,8 +48,8 @@ function MessageSide() {
   };
 
   fetchData()
-    .then((users) => getUser(users.data))
-    .then((user) =>
+    .then(users => getUser(users.data))
+    .then(user =>
       setuser({
         name: user.name,
         email: user.email,
@@ -63,7 +67,10 @@ function MessageSide() {
         borderRight: '1px solid #333',
       }}
     >
-      <div style={{ display: 'flex',marginBottom:'20px'}} className='Message__head'>
+      <div
+        style={{ display: 'flex', marginBottom: '20px' }}
+        className='Message__head'
+      >
         <img
           style={{
             objectFit: 'cover',
@@ -78,11 +85,9 @@ function MessageSide() {
         </h2>
       </div>
       <div className='friends'>
-        {
-          friends.map(friend => {
-            return <Friend name={friend.name} image={friend.image}/>
-          })
-        }
+        {friends.map(friend => {
+          return <Friend name={friend.name} image={friend.image} />;
+        })}
       </div>
     </div>
   );
