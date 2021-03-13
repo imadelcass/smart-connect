@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
 
 function Friend({ name, image }) {
-  const [friendcss, setfriendcss] = useState({
-    display: 'flex',
-    border: '1px solid #333',
-    borderRadius: '10px',
-    padding: '5px',
-    hover :{
-      color: '#ed1212',
-      cursor: 'pointer',
-    }
-  });
+
   const displayMessages = e => {
-    console.log(e.target);
-  };
+    
+  }
+
+
   return (
     <div
       onClick={displayMessages}
-      // onMouseEnter={() => setfriendcss({ cursor: 'pointer' })}
-      style={friendcss}
+      style={{
+        display: 'flex',
+        border: '1px solid #333',
+        borderRadius: '10px',
+        padding: '5px',
+        cursor: 'pointer',
+      }}
     >
       <img
         style={{

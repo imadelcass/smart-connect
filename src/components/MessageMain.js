@@ -1,3 +1,11 @@
+import {
+  Button,
+  TextField,
+  FormControl,
+  Input,
+  InputLabel,
+  FormHelperText,
+} from '@material-ui/core';
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from './axios';
@@ -5,6 +13,12 @@ const image =
   'https://firebasestorage.googleapis.com/v0/b/clone-12b84.appspot.com/o/images%2Fimad.jpg?alt=media&token=005c8f74-c327-491e-badc-eaf25a17e1ff';
 function MessageMain() {
   const [users, setusers] = useState([]);
+  const [singleMsg, setsingleMsg] = useState('');
+  const [messages, setmessages] = useState([
+    {
+      body: 'hello man',
+    },
+  ]);
   const [targetElement, settargetElement] = useState('');
   const [usersStyle, setusersStyle] = useState({
     display: 'none',
@@ -20,9 +34,9 @@ function MessageMain() {
     background: '#fff',
     display: 'flex',
     justifyContent: 'space-between',
-    width : '95%'
+    width: '95%',
   });
-  
+
   useEffect(() => {
     axios.get('/demo/users').then(e => {
       setusers(e.data);
@@ -80,6 +94,73 @@ function MessageMain() {
                   <img style={{ width: '50px' }} src={user.image} />
                 </div>
               </Link>
+            );
+          })}
+        </div>
+      </div>
+      <div style={{ border: '1px solid #333', width: '95%', height: '80vh' }}>
+        <FormControl>
+          <InputLabel htmlFor='my-input'>Email address</InputLabel>
+          <Input id='my-input' aria-describedby='my-helper-text' />
+          <FormHelperText id='my-helper-text'>
+            We'll never share your email.
+          </FormHelperText>
+        </FormControl>
+
+        <FormControl
+        // noValidate
+        // autoComplete='off'
+        // style={{
+        //   display: 'flex',
+        //   position: 'absolute',
+        //   bottom: '19px',
+        //   width: '60%',
+        //   height: '40px',
+        // }}
+        >
+          <InputLabel htmlFor='my-input'>Enter message</InputLabel>
+          <Input
+          //   id='outlined-basic'
+          //   label='Enter message'
+          //   variant='outlined'
+          //   onChange={e => setsingleMsg(e.target.value)}
+          //   style={{ height: '30px', width: '90%' }}
+          //   value={singleMsg}
+          />
+          {/* <Button
+            disabled={!singleMsg}
+            variant='contained'
+            color='secondary'
+            onClick={() => {
+              setmessages([
+                ...messages,
+                {
+                  body: singleMsg,
+                },
+              ]);
+              setsingleMsg('');
+            }}
+            style={{ width: '10%' }}
+          >
+            Send
+          </Button> */}
+        </FormControl>
+        <div>
+          {messages.map(message => {
+            return (
+              <div
+                style={{
+                  padding: '10px',
+                  background: 'gray',
+                  margin: '10px',
+                  maxWidth: 'fit-content',
+                  borderRadius: '5px',
+                  position: 'relative',
+                  bottom: '0',
+                }}
+              >
+                <h3>{message.body}</h3>
+              </div>
             );
           })}
         </div>

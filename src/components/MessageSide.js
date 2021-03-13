@@ -8,13 +8,13 @@ function MessageSide() {
   const [nameEmail, setNameEmail] = useState('');
   const [friends, setfriends] = useState([
     {
-      _id: '6048ad9e2913622c3c6f4f1d',
-      idUser: 'gKIu3l8QrW0aVgPBwwWx',
-      name: 'lhsen yazmi',
+      _id: '604608d1842ad404403d27f2',
+      idUser: '8U5fFFvEHOcIVq54Wt6S',
+      name: 'mohamed elcass',
       image:
-        'https://firebasestorage.googleapis.com/v0/b/clone-12b84.appspot.com/o/images%2FGettyImages-1092658864_hero-1024x575.jpg?alt=media&token=ebd3d12c-22bb-478d-8ac7-11b08ebcdde5',
-      email: 'lhsen@yahoo.com',
-      age: '33',
+        'https://firebasestorage.googleapis.com/v0/b/clone-12b84.appspot.com/o/images%2Fimages.jpg?alt=media&token=3fa25ca0-85d8-4bd4-9d36-0694db25013b',
+      email: 'mohamed@gmail.com',
+      age: '45',
     },
   ]);
   const [user, setuser] = useState({
@@ -85,7 +85,7 @@ function MessageSide() {
         </h2>
       </div>
       <div className='friends'>
-        {friends.map(friend => {
+        {friends.map((friend) => {
           return <Friend name={friend.name} image={friend.image} />;
         })}
       </div>
