@@ -5,6 +5,12 @@ const image =
   'https://firebasestorage.googleapis.com/v0/b/clone-12b84.appspot.com/o/images%2Fimad.jpg?alt=media&token=005c8f74-c327-491e-badc-eaf25a17e1ff';
 function MessageMain() {
   const [users, setusers] = useState([]);
+  const [singleMsg, setsingleMsg] = useState('');
+  const [messages, setmessages] = useState([
+    {
+      body: 'hello man',
+    },
+  ]);
   const [targetElement, settargetElement] = useState('');
   const [usersStyle, setusersStyle] = useState({
     display: 'none',
@@ -20,18 +26,18 @@ function MessageMain() {
     background: '#fff',
     display: 'flex',
     justifyContent: 'space-between',
-    width : '95%'
+    width: '95%',
   });
-  
+
   useEffect(() => {
-    axios.get('/demo/users').then(e => {
+    axios.get('/demo/users').then((e) => {
       setusers(e.data);
       setfiltredUsers(e.data);
     });
   }, []);
   let inputRef = useRef();
   useEffect(() => {
-    let handler = e => {
+    let handler = (e) => {
       if (!inputRef.current.contains(e.target))
         setusersStyle({ display: 'none' });
     };
@@ -41,14 +47,14 @@ function MessageMain() {
       document.removeEventListener('mousedown', handler);
     };
   });
-  const displayUsers = e => {
+  const displayUsers = (e) => {
     settargetElement(e.target);
     console.log(targetElement);
     setusersStyle({ display: 'block' });
   };
-  const filterUsers = e => {
+  const filterUsers = (e) => {
     setfiltredUsers(
-      users.filter(user => {
+      users.filter((user) => {
         // return the user contien letter from input
         if (user.name.toLowerCase().includes(e.target.value)) {
           return user;
@@ -56,7 +62,7 @@ function MessageMain() {
       })
     );
   };
-  const maskUsers = e => {
+  const maskUsers = (e) => {
     // if you click outside the input
     if (e.target != targetElement) {
       setusersStyle({ display: 'none' });
@@ -72,7 +78,7 @@ function MessageMain() {
           onKeyUp={filterUsers}
         />
         <div ref={inputRef} style={usersStyle}>
-          {filtredUsers.map(user => {
+          {filtredUsers.map((user) => {
             return (
               <Link to={`/users/${user._id}`}>
                 <div key={user.name} style={userStyle}>
@@ -81,6 +87,39 @@ function MessageMain() {
                 </div>
               </Link>
             );
+          })}
+        </div>
+      </div>
+      <div style={{ border: '1px solid #333', width: '95%', height: '80vh' }}>
+        <div
+          style={{
+            display: 'flex',
+            position: 'absolute',
+            bottom: '19px',
+            width: '60%',
+            height: '40px',
+          }}
+        >
+          <input
+            onKeyUp={(e) => setsingleMsg(e.target.value)}
+            style={{ height: '30px' }}
+            type='text'
+          />
+          <button
+            onClick={() => {
+              console.log(singleMsg);
+              setmessages([...messages,{
+                body: singleMsg,
+              }]);
+            }}
+            style={{ height: '30px' }}
+          >
+            Send
+          </button>
+        </div>
+        <div>
+          {messages.map((message) => {
+            return <h3>{message.body}</h3>;
           })}
         </div>
       </div>

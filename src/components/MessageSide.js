@@ -8,9 +8,13 @@ function MessageSide() {
   const [nameEmail, setNameEmail] = useState('');
   const [friends, setfriends] = useState([
     {
-      name: 'smart connect',
+      _id: '604608d1842ad404403d27f2',
+      idUser: '8U5fFFvEHOcIVq54Wt6S',
+      name: 'mohamed elcass',
       image:
-        'https://firebasestorage.googleapis.com/v0/b/clone-12b84.appspot.com/o/images%2F4200790421556105333-512.png?alt=media&token=734768f7-8ebd-4b29-846c-fa83f5c30097',
+        'https://firebasestorage.googleapis.com/v0/b/clone-12b84.appspot.com/o/images%2Fimages.jpg?alt=media&token=3fa25ca0-85d8-4bd4-9d36-0694db25013b',
+      email: 'mohamed@gmail.com',
+      age: '45',
     },
   ]);
   const [user, setuser] = useState({
@@ -63,7 +67,10 @@ function MessageSide() {
         borderRight: '1px solid #333',
       }}
     >
-      <div style={{ display: 'flex',marginBottom:'20px'}} className='Message__head'>
+      <div
+        style={{ display: 'flex', marginBottom: '20px' }}
+        className='Message__head'
+      >
         <img
           style={{
             objectFit: 'cover',
@@ -78,11 +85,9 @@ function MessageSide() {
         </h2>
       </div>
       <div className='friends'>
-        {
-          friends.map(friend => {
-            return <Friend name={friend.name} image={friend.image}/>
-          })
-        }
+        {friends.map((friend) => {
+          return <Friend name={friend.name} image={friend.image} />;
+        })}
       </div>
     </div>
   );

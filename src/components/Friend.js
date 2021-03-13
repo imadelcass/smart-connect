@@ -1,14 +1,31 @@
 import React from 'react';
 
 function Friend({ name, image }) {
+
+  const displayMessages = e => {
+    
+  }
+
+
+
   return (
-    <div style={{ display: 'flex', border: '1px solid #333',borderRadius: '10px' }}>
+    <div
+      onClick={displayMessages}
+      style={{
+        display: 'flex',
+        border: '1px solid #333',
+        borderRadius: '10px',
+        padding: '5px',
+        cursor: 'pointer',
+      }}
+    >
       <img
         style={{
           objectFit: 'cover',
           width: '60px',
           height: '60px',
           borderRadius: '50%',
+          marginRight: '15px',
         }}
         src={image}
       />
