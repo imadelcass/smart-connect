@@ -86,7 +86,7 @@ function MessageSide() {
       </div>
       <div className='friends'>
         {friends.map((friend) => {
-          return <Friend name={friend.name} image={friend.image} />;
+          return <Friend name={friend.name} image={friend.image}/>;
         })}
       </div>
     </div>

@@ -9,16 +9,37 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from './axios';
+import { db } from './firebase';
+import firebase from 'firebase';
 const image =
   'https://firebasestorage.googleapis.com/v0/b/clone-12b84.appspot.com/o/images%2Fimad.jpg?alt=media&token=005c8f74-c327-491e-badc-eaf25a17e1ff';
 function MessageMain() {
   const [users, setusers] = useState([]);
   const [singleMsg, setsingleMsg] = useState('');
-  const [messages, setmessages] = useState([
-    {
-      body: 'hello man',
-    },
-  ]);
+  const [messages, setmessages] = useState([]);
+
+  const [myArr, setmyArr] = useState([{ body: 'sss' }]);
+  useEffect(e => {
+    db.collection('friends')
+      .doc('vH9G5htiv9xjr0Yofi8I')
+      .collection('messages')
+      .orderBy('timestamp', 'desc')
+      .onSnapshot(snapshot => {
+        setmessages(snapshot.docs.map(doc => doc.data()));
+      });
+  }, []);
+  //add message to firestore:
+  const addMessage = e => {
+    e.preventDefault();
+    db.collection('friends')
+      .doc('vH9G5htiv9xjr0Yofi8I')
+      .collection('messages')
+      .add({
+        body: singleMsg,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    setsingleMsg('');
+  };
   const [targetElement, settargetElement] = useState('');
   const [usersStyle, setusersStyle] = useState({
     display: 'none',
@@ -57,7 +78,6 @@ function MessageMain() {
   });
   const displayUsers = e => {
     settargetElement(e.target);
-    console.log(targetElement);
     setusersStyle({ display: 'block' });
   };
   const filterUsers = e => {
@@ -99,53 +119,48 @@ function MessageMain() {
         </div>
       </div>
       <div style={{ border: '1px solid #333', width: '95%', height: '80vh' }}>
-        <FormControl>
-          <InputLabel htmlFor='my-input'>Email address</InputLabel>
-          <Input id='my-input' aria-describedby='my-helper-text' />
-          <FormHelperText id='my-helper-text'>
-            We'll never share your email.
-          </FormHelperText>
-        </FormControl>
-
-        <FormControl
-        // noValidate
-        // autoComplete='off'
-        // style={{
-        //   display: 'flex',
-        //   position: 'absolute',
-        //   bottom: '19px',
-        //   width: '60%',
-        //   height: '40px',
-        // }}
+        <form
+          noValidate
+          autoComplete='off'
+          style={{
+            display: 'flex',
+            position: 'absolute',
+            bottom: '19px',
+            width: '60%',
+            height: '40px',
+          }}
         >
-          <InputLabel htmlFor='my-input'>Enter message</InputLabel>
           <Input
-          //   id='outlined-basic'
-          //   label='Enter message'
-          //   variant='outlined'
-          //   onChange={e => setsingleMsg(e.target.value)}
-          //   style={{ height: '30px', width: '90%' }}
-          //   value={singleMsg}
+            id='outlined-basic'
+            onChange={e => setsingleMsg(e.target.value)}
+            style={{ width: '90%' }}
+            value={singleMsg}
           />
-          {/* <Button
+          <Button
             disabled={!singleMsg}
             variant='contained'
             color='secondary'
-            onClick={() => {
-              setmessages([
-                ...messages,
-                {
-                  body: singleMsg,
-                },
-              ]);
-              setsingleMsg('');
-            }}
+            onClick={addMessage}
             style={{ width: '10%' }}
           >
             Send
-          </Button> */}
-        </FormControl>
-        <div>
+          </Button>
+        </form>
+        <div
+          style={{
+            margin: '4px, 4px',
+            padding: '4px',
+            width: '100%',
+            height: '80%',
+            overflowX: 'auto',
+            overflowY: 'auto',
+            textAlign: 'justify',
+            display: 'flex',
+            flexDirection:'column-reverse',
+            // top: '0',
+            // bottom:'0',
+          }}
+        >
           {messages.map(message => {
             return (
               <div
